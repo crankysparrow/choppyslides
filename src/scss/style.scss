@@ -7,41 +7,100 @@ html, body {
             box-sizing: border-box;
 }
 
-    *,
-  *::before,
-  *::after {
-      -webkit-box-sizing: inherit;
-          -moz-box-sizing: inherit;
-              box-sizing: inherit;
-  }
+*,
+*::before,
+*::after {
+    -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+            box-sizing: inherit;
+}
 
 body {
-  // padding: 20px;
   font-family: Inconsolata, Verdana, Geneva, Tahoma, sans-serif;
   background-color: black;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-.nav {
-  align-self: flex-start;
-  margin: 1rem;
-  cursor: pointer;
+  color: white;
 }
 
 .container {
-  margin: 20px;
+  margin: 20px auto;
   position: relative;
   display: flex;
+  width: 1200px;
   justify-content: center;
-  // overflow: hidden;
+  overflow: hidden;
 }
 
-.image-outer {
-  display: none;
+.slider-text {
+  flex: 0 0 350px;
+  transition: all 200ms linear;
+  position: relative;
+  overflow: hidden;
+  margin-left: 80px;
+  height: 400px;
+  align-self: stretch;
+  z-index: 0;
+  .slide {
+    width: 100%;
+    position: absolute;
+    padding: 20px 20px 20px 40px;
+    color: white;
+  }
+}
+
+.slider-images {
+  flex: 0 0 400px;
+  height: 400px;
+  position: relative;
+  z-index: 99;
+  .slide-image {
+    position: absolute;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    left: 10%;
+    top: 10%;      
+    img {
+      height: 80%;
+      width: 80%;
+      object-fit: cover; 
+    }
+  }
+}
+
+.nav {
+  align-self: end;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: 0;
+  border-bottom: 0px solid white;
+  font-size: 2rem;
+  position: relative;
+  &:after {
+    content: '';
+    background-color: white;
+    display: inline-block;
+    width: 0;
+    height: 4px;
+    transition: all 200ms linear;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+  &.nav-prev {
+    &:after {
+      left: unset;
+      right: 0;
+    }
+  }  
+  &:hover {
+    &:after {
+      width: 100%;
+    }
+  }
+  &.nav-next  {
+    // margin-left:  20px;
+  }
 }
 
 .backgrounds {
@@ -59,22 +118,32 @@ img {
     }
     .one {
       width: 110%;
-      height: 90px;
+      height: 80px;
       background-size: calc(100% + 100px);
       background-position: -100px -100px;
-      top: 10px;
+      top: 20px;
       mix-blend-mode: overlay;
       filter: brightness(1.6) hue-rotate(10deg) contrast(1.2);
     }  
     .two {
+      width: 120%;
+      height: 30px;
+      left: 20px;
+      z-index: 99;
+      background-position: 0px -120px;
+      mix-blend-mode: overlay;
+      background-size: 100% auto;
+    }    
+    .three {
       width: 115%;
       height: 60px;
       background-size: 100% auto;
       background-position: 0 -200px;
       top: 60px;
       left: -50px;
+      filter: brightness(1.3) saturate(.9) hue-rotate(10deg);
     }  
-    .three {
+    .four {
       width: 105%;
       height: 90px;
       background-size: calc(100% + 20px) calc(100% + 300px);
@@ -88,88 +157,19 @@ img {
   }
 }
 
-.slider-image-box-bottom,
-.slider-image-box-left {
-  display: none;
-  position: absolute;
-  height: 80%;
-  width: 80%;
-  left: 10%;
-  top: 10%; 
-}
-
-.slider-image-box-bottom {
-  border-bottom: 4px solid white;
-}
-
-.slider-image-box-left {
-  border-left: 3px solid white;
-}
-
-.slider-images {
-  flex: 0 0 400px;
-  height: 400px;
-  // overflow: hidden;
-  position: relative;
-  z-index: 99;
-  .slide-image {
-    position: absolute;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    .image-outer, .image-inner {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      position: absolute;
+.pagination {
+  display: flex;
+  width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
+  > div {
+    border: 1px solid white;
+    padding: 5px 10px;
+    margin: 15px;
+    cursor: pointer;
+    &.current {
+      background-color: white;
+      color: black;
     }
-    .image-outer img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(.5) saturate(140%);
-      transform: scaleX(-1) scale(1.5);
-      overflow: hidden;
-      // filter: saturate(1.6);
-    }
-    .image-inner {
-      left: 10%;
-      top: 10%;  
-    }
-    .image-inner img {
-      height: 80%;
-      width: 80%;
-      object-fit: cover; 
-    }
-  }
-}
-
-.slider-text {
-  flex: 0 0 400px;
-  transition: all 200ms linear;
-  position: relative;
-  overflow: hidden;
-  margin-left: 5%;
-  // background-color: black;
-  height: 400px;
-  align-self: stretch;
-  z-index: 0;
-  // left: -50%;
-  .slide {
-    padding: 10px;
-    width: 100%;
-    position: absolute;
-    padding: 1rem 3rem;
-    // background-color: black;
-    color: white;
-    // &:nth-child(1) {
-    //   background-color: salmon;
-    // }
-    // &:nth-child(2) {
-    //   background-color: lavender;
-    // }
-    // &:nth-child(3) {
-    //   background-color: azure;
-    // }
   }
 }
